@@ -1,6 +1,6 @@
 [package]
 edition = "2021"
-name = "geckodriver"
+name = "geckodriver-fork"
 version = "0.36.0"
 authors = ["Mozilla"]
 include = [
@@ -8,7 +8,7 @@ include = [
     "/build.rs",
     "/src"
   ]
-description = "Proxy for using WebDriver clients to interact with Gecko-based browsers."
+description = "Fork of `geckodriver` to allow use as a crate in other Rust projects"
 readme = "README.md"
 keywords = [
     "firefox",
@@ -18,7 +18,7 @@ keywords = [
     "webdriver",
   ]
 license = "MPL-2.0"
-repository = "https://hg.mozilla.org/mozilla-central/file/tip/testing/geckodriver"
+repository = "https://github.com/browsh-org/geckodriver-librs"
 
 [dependencies]
 anyhow = "1"
@@ -31,11 +31,11 @@ hyper = "0.14"
 icu_segmenter = { version = "2.0", default-features = false, features = ["auto", "compiled_data"] }
 lazy_static = "1.0"
 log = { version = "0.4", features = ["std"] }
-marionette = { path = "./marionette", version="0.7.0" }
-mozdevice = { path = "../mozbase/rust/mozdevice", version="0.5.4" }
-mozprofile = { path = "../mozbase/rust/mozprofile", version="0.9.4" }
-mozrunner = { path = "../mozbase/rust/mozrunner", version="0.15.4" }
-mozversion = { path = "../mozbase/rust/mozversion", version="0.5.3" }
+marionette = "0.7.0"
+mozdevice = "0.5.4"
+mozprofile = "0.9.4"
+mozrunner = "0.15.4"
+mozversion = "0.5.3"
 regex = { version="1.0", default-features = false, features = ["perf", "std"] }
 serde = "1.0"
 serde_derive = "1.0"
@@ -44,7 +44,7 @@ tempfile = "3"
 thiserror = "1"
 url = "2.4"
 uuid = { version = "1.0", features = ["v4"] }
-webdriver = { path = "../webdriver", version="0.53.0" }
+webdriver = "0.53.0"
 yaml-rust = { version = "0.10", package = "yaml-rust2" }
 zip = { version = "2.1.2", default-features = false, features = ["deflate-flate2", "flate2"] }
 mozilla-central-workspace-hack = { version = "0.1", features = ["geckodriver"], optional = true }
@@ -53,4 +53,5 @@ mozilla-central-workspace-hack = { version = "0.1", features = ["geckodriver"], 
 tempfile = "3"
 
 [[bin]]
+path = "src/main.rs"
 name = "geckodriver"

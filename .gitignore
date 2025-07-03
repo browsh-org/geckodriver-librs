@@ -1,0 +1,15 @@
+# Tools
+target/
+
+# Editor config
+.vscode/
+.idea/
+
+# Local environmental variables
+.env
+
+# MacOS folder attributes
+**/.DS_Store
+
+# Logs sometimes make it into the repo
+*.log
