@@ -95,32 +95,32 @@ struct MarionetteHandshake {
 }
 
 #[derive(Default)]
-pub(crate) struct MarionetteSettings {
-    pub(crate) binary: Option<PathBuf>,
-    pub(crate) profile_root: Option<PathBuf>,
-    pub(crate) connect_existing: bool,
-    pub(crate) host: String,
-    pub(crate) port: Option<u16>,
-    pub(crate) websocket_port: u16,
-    pub(crate) allow_hosts: Vec<Host>,
-    pub(crate) allow_origins: Vec<Url>,
-    pub(crate) system_access: bool,
+pub struct MarionetteSettings {
+    pub binary: Option<PathBuf>,
+    pub profile_root: Option<PathBuf>,
+    pub connect_existing: bool,
+    pub host: String,
+    pub port: Option<u16>,
+    pub websocket_port: u16,
+    pub allow_hosts: Vec<Host>,
+    pub allow_origins: Vec<Url>,
+    pub system_access: bool,
 
     /// Brings up the Browser Toolbox when starting Firefox,
     /// letting you debug internals.
-    pub(crate) jsdebugger: bool,
+    pub jsdebugger: bool,
 
-    pub(crate) android_storage: AndroidStorageInput,
+    pub android_storage: AndroidStorageInput,
 }
 
 #[derive(Default)]
-pub(crate) struct MarionetteHandler {
+pub struct MarionetteHandler {
     connection: Mutex<Option<MarionetteConnection>>,
     settings: MarionetteSettings,
 }
 
 impl MarionetteHandler {
-    pub(crate) fn new(settings: MarionetteSettings) -> MarionetteHandler {
+    pub fn new(settings: MarionetteSettings) -> MarionetteHandler {
         MarionetteHandler {
             connection: Mutex::new(None),
             settings,

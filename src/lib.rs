@@ -17,14 +17,14 @@ extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;
 extern crate tempfile;
-extern crate url;
+pub extern crate url;
 extern crate uuid;
 extern crate webdriver;
 extern crate yaml_rust;
 extern crate zip;
 
 #[macro_use]
-extern crate log;
+pub extern crate log;
 
 use std::env;
 use std::net::{IpAddr, SocketAddr, ToSocketAddrs};
@@ -50,7 +50,7 @@ mod build;
 mod capabilities;
 mod command;
 mod logging;
-mod marionette;
+pub mod marionette;
 mod prefs;
 
 #[cfg(test)]
@@ -81,6 +81,52 @@ enum Operation {
         deprecated_enable_crash_reporter: bool,
         deprecated_storage_arg: bool,
     },
+}
+
+pub struct GeckodriverSettings {
+    pub marionette: marionette::MarionetteSettings,
+    pub address: SocketAddr,
+    pub allowed_hosts: Vec<Host>,
+    pub allowed_origins: Vec<Url>,
+    pub log_level: Option<Level>,
+    pub log_truncate: bool,
+}
+
+impl Default for GeckodriverSettings {
+    fn default() -> Self {
+        Self {
+            marionette: marionette::MarionetteSettings::default(),
+            address: std::net::SocketAddr::new("127.0.0.1".parse().unwrap(), 4444),
+            allowed_hosts: vec![Host::Ipv4("127.0.0.1".parse().unwrap())],
+            allowed_origins: vec![],
+            log_level: Some(Level::Info),
+            log_truncate: false,
+        }
+    }
+}
+
+pub fn start(settings: GeckodriverSettings) -> std::io::Result<()> {
+    if let Some(ref level) = settings.log_level {
+        logging::init_with_level(*level, false).unwrap();
+    } else {
+        logging::init(settings.log_truncate).unwrap();
+    }
+
+    let result = webdriver::server::start(
+        settings.address,
+        settings.allowed_hosts,
+        settings.allowed_origins,
+        marionette::MarionetteHandler::new(settings.marionette),
+        extension_routes(),
+    );
+
+    match result {
+        Ok(listener) => {
+            info!("Listening on {}", listener.socket);
+            Ok(())
+        }
+        Err(error) => Err(error),
+    }
 }
 
 /// Get a socket address from the provided host and port
@@ -314,7 +360,7 @@ fn inner_main(operation: Operation, cmd: &mut Command) -> ProgramResult<()> {
     Ok(())
 }
 
-fn main() -> ExitCode {
+pub fn bin_main() -> ExitCode {
     let mut cmd = make_command();
 
     let args = match cmd.try_get_matches_from_mut(env::args()) {
