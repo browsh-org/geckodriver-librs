@@ -94,10 +94,23 @@ pub struct GeckodriverSettings {
 
 impl Default for GeckodriverSettings {
     fn default() -> Self {
+        let allowed_hosts = vec![
+            Host::Ipv4("127.0.0.1".parse().unwrap()),
+            Host::Domain("localhost".parse().unwrap()),
+        ];
+
+        let marionette = marionette::MarionetteSettings {
+            host: "127.0.0.1".to_owned(),
+            port: Some(9222),
+            allow_hosts: allowed_hosts.clone(),
+            allow_origins: vec![],
+            ..Default::default()
+        };
+
         Self {
-            marionette: marionette::MarionetteSettings::default(),
+            marionette,
             address: std::net::SocketAddr::new("127.0.0.1".parse().unwrap(), 4444),
-            allowed_hosts: vec![Host::Ipv4("127.0.0.1".parse().unwrap())],
+            allowed_hosts,
             allowed_origins: vec![],
             log_level: Some(Level::Info),
             log_truncate: false,

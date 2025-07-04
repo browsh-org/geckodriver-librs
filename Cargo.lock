@@ -474,7 +474,7 @@ dependencies = [
 
 [[package]]
 name = "geckodriver-librs"
-version = "0.36.0"
+version = "0.36.0-fork.1"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
