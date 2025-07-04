@@ -5,7 +5,7 @@ A fork of Firefox's WebDriver-compatible browser control server: ['geckodriver']
 This fork is mainly to allow including `geckodriver` as a crate in your own Rust projects. Mozilla officially only makes it available as pre-built binaries, which whilst useful, means that those binaries have to be distributed alongside the binaries of your own project.
 
 ## Usage
-See the [examples](/examples).
+Add to your `Config.toml` as normal, eg: `geckodriver-librs = "0.36.0"`
 
 ```rust
 fn main() {
@@ -33,6 +33,8 @@ fn main() {
     // }
 }
 ```
+
+See the [examples](/examples).
 
 ## Upstream updates
 Requires https://github.com/newren/git-filter-repo
