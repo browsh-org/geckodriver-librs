@@ -1,6 +1,6 @@
 [package]
 edition = "2021"
-name = "geckodriver-fork"
+name = "geckodriver-librs"
 version = "0.36.0"
 authors = ["Mozilla"]
 include = [
@@ -50,8 +50,9 @@ zip = { version = "2.1.2", default-features = false, features = ["deflate-flate2
 mozilla-central-workspace-hack = { version = "0.1", features = ["geckodriver"], optional = true }
 
 [dev-dependencies]
+reqwest = { version = "0.12.22", features = ["blocking", "json"] }
 tempfile = "3"
 
 [[bin]]
-path = "src/main.rs"
+path = "src/bin.rs"
 name = "geckodriver"
